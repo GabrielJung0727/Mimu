@@ -1,0 +1,26 @@
+{
+  "name": "mimu",
+  "version": "1.0.0",
+  "description": "여러 서버를 관리하기 위한 확장 가능한 디스코드 봇",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "keywords": ["디스코드", "봇", "확장가능"],
+  "author": "개발자 이름",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.0.3",
+    "sequelize": "^6.30.0",
+    "mysql2": "^3.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "eslint": "^8.52.0",
+    "jest": "^29.8.0"
+  }
+}
