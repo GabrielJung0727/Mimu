@@ -1,0 +1,413 @@
+{
+    "commands": {
+        "clear": {
+            "description": "채널에서 메시지를 삭제합니다.",
+            "options": {
+                "amount": "삭제할 메시지 수",
+                "user": "특정 유저의 메시지만 삭제"
+            },
+            "success": "{count}개의 메시지가 삭제되었습니다.",
+            "errors": {
+                "invalidAmount": "삭제할 메시지 수는 1에서 100 사이여야 합니다.",
+                "failed": "메시지를 삭제하는 중 오류가 발생했습니다."
+            }
+        },
+
+        "configureSettings": {
+            "description": "현재 서버 설정을 보여줍니다.",
+            "embedTitle": "서버 설정 미리보기",
+            "embedDescription": "현재 서버의 주요 설정이 아래와 같습니다.",
+            "fields": {
+                "currencySymbol": "화폐 기호",
+                "welcomeMessage": "환영 메시지",
+                "boostMessage": "부스트 메시지",
+                "leaveMessage": "퇴장 메시지"
+            },
+            "defaults": {
+                "currencySymbol": "기본 값 없음",
+                "welcomeMessage": "환영 메시지가 설정되지 않았습니다.",
+                "boostMessage": "부스트 메시지가 설정되지 않았습니다.",
+                "leaveMessage": "퇴장 메시지가 설정되지 않았습니다."
+            },
+            "errors": {
+                "noServer": "서버가 데이터베이스에 등록되지 않았습니다.",
+                "failed": "설정을 가져오는 중 오류가 발생했습니다."
+            }
+        },
+
+        "shop": {
+            "add": {
+                "description": "상점에 새로운 아이템을 추가합니다.",
+                "options": {
+                    "action": "수행할 작업 (add)",
+                    "name": "아이템 이름",
+                    "price": "아이템 가격",
+                    "stock": "아이템 재고 (0: 무한 재고)",
+                    "role": "아이템 구매 시 부여할 역할 (선택 사항)",
+                    "description": "아이템 설명 (선택 사항)"
+                },
+                "successTitle": "상점 아이템 추가 성공",
+                "successDescription": "**{name}**\n- 가격: {price}\n- 재고: {stock}\n- 역할: {role}\n- 설명: {description}",
+                "unlimitedStock": "무한 재고",
+                "noRole": "역할 없음",
+                "noDescription": "설명 없음",
+                "errors": {
+                    "invalidAction": "지원하지 않는 작업입니다.",
+                    "failed": "상점 아이템 추가 중 오류가 발생했습니다."
+                }
+            }
+        },
+
+        "modifyBalance": {
+            "description": "유저의 잔액을 수정합니다.",
+            "options": {
+                "action": "수행할 작업 (add, remove, set)",
+                "user": "잔액을 수정할 유저",
+                "amount": "수정할 금액"
+            },
+            "actions": {
+                "add": "추가",
+                "remove": "제거",
+                "set": "설정"
+            },
+            "successTitle": "잔액 수정 완료",
+            "successDescription": "{user}님의 잔액이 {action}되었습니다.\n현재 잔액: {balance} (변경 금액: {amount})",
+            "errors": {
+                "failed": "잔액을 수정하는 중 오류가 발생했습니다."
+            }
+        },
+
+        "mute": {
+            "description": "특정 유저를 뮤트합니다.",
+            "options": {
+                "user": "뮤트할 유저",
+                "duration": "뮤트 기간 (예: 10m, 1h, 1d)",
+                "reason": "뮤트 사유 (선택 사항)"
+            },
+            "defaultReason": "사유 없음",
+            "successTitle": "뮤트 성공",
+            "successDescription": "{user}님이 뮤트되었습니다.\n- 기간: {duration}\n- 사유: {reason}",
+            "permanent": "영구",
+            "errors": {
+                "noMember": "해당 유저를 찾을 수 없습니다.",
+                "noPermission": "뮤트를 설정할 권한이 없습니다.",
+                "invalidDuration": "유효한 뮤트 기간을 입력하세요.",
+                "failed": "뮤트를 설정하는 중 오류가 발생했습니다."
+            }
+        },
+
+        "resetServer": {
+            "description": "서버 데이터를 초기화합니다.",
+            "options": {
+                "target": "초기화할 데이터 (전체, 잔액, 경고, 상점 등)"
+            },
+            "targets": {
+                "all": "전체 데이터",
+                "balances": "유저 잔액",
+                "warnings": "유저 경고",
+                "shop": "상점 아이템",
+                "mutes": "뮤트 데이터",
+                "settings": "서버 설정"
+            },
+            "successTitle": "데이터 초기화 완료",
+            "successDescription": "{target}이(가) 성공적으로 초기화되었습니다.",
+            "errors": {
+                "failed": "데이터를 초기화하는 중 오류가 발생했습니다."
+            }
+        },
+
+        "set": {
+            "description": "서버 설정을 관리합니다.",
+            "boost": {
+                "description": "부스트 메시지를 설정합니다.",
+                "message": {
+                    "description": "부스트 메시지를 설정합니다.",
+                    "options": {
+                        "message": "부스트 메시지 텍스트"
+                    },
+                    "successTitle": "부스트 메시지 설정 완료",
+                    "successDescription": "부스트 메시지가 다음과 같이 설정되었습니다:\n`{message}`",
+                    "errors": {
+                        "failed": "부스트 메시지를 설정하는 중 오류가 발생했습니다."
+                    }
+                },
+                "channel": {
+                    "description": "부스트 메시지를 보낼 채널을 설정합니다.",
+                    "options": {
+                        "channel": "메시지를 보낼 채널"
+                    },
+                    "successTitle": "부스트 채널 설정 완료",
+                    "successDescription": "부스트 메시지를 보낼 채널이 `{channel}`로 설정되었습니다.",
+                    "errors": {
+                        "failed": "부스트 채널을 설정하는 중 오류가 발생했습니다."
+                    }
+                }
+            }
+        },
+
+        "set2": {
+            "description": "서버 설정을 관리합니다.",
+            "leave": {
+                "description": "퇴장 메시지를 설정합니다.",
+                "message": {
+                    "description": "퇴장 메시지를 설정합니다.",
+                    "options": {
+                        "message": "퇴장 메시지 텍스트"
+                    },
+                    "successTitle": "퇴장 메시지 설정 완료",
+                    "successDescription": "퇴장 메시지가 다음과 같이 설정되었습니다:\n`{message}`",
+                    "errors": {
+                        "failed": "퇴장 메시지를 설정하는 중 오류가 발생했습니다."
+                    }
+                },
+                "channel": {
+                    "description": "퇴장 메시지를 보낼 채널을 설정합니다.",
+                    "options": {
+                        "channel": "메시지를 보낼 채널"
+                    },
+                    "successTitle": "퇴장 채널 설정 완료",
+                    "successDescription": "퇴장 메시지를 보낼 채널이 `{channel}`로 설정되었습니다.",
+                    "errors": {
+                        "failed": "퇴장 채널을 설정하는 중 오류가 발생했습니다."
+                    }
+                }
+            }
+        },
+
+        "setrole": {
+            "description": "특정 조건에 따라 역할을 부여합니다.",
+            "options": {
+                "role": "설정할 역할",
+                "condition": "조건 유형",
+                "value": "조건 값"
+            },
+            "conditions": {
+                "onJoin": "서버에 가입 시",
+                "messageCount": "메시지 개수 이상",
+                "reactionCount": "리액션 개수 이상",
+                "boostServer": "서버 부스트"
+            },
+            "values": {
+                "none": "조건 값 없음"
+            },
+            "errors": {
+                "invalidValue": "유효한 조건 값을 입력하세요.",
+                "alreadyExists": "이 역할과 조건 조합은 이미 설정되어 있습니다.",
+                "failed": "역할 조건 설정 중 오류가 발생했습니다."
+            },
+            "successTitle": "역할 조건 설정 완료",
+            "successDescription": "'{role}' 역할이 {condition} 조건으로 추가되었습니다. 조건 값: {value}"
+        },
+
+        "set3": {
+            "description": "서버 설정을 관리합니다.",
+            "welcome": {
+                "description": "환영 메시지를 설정합니다.",
+                "message": {
+                    "description": "환영 메시지를 설정합니다.",
+                    "options": {
+                        "message": "환영 메시지 텍스트"
+                    },
+                    "successTitle": "환영 메시지 설정 완료",
+                    "successDescription": "환영 메시지가 다음과 같이 설정되었습니다:\n`{message}`",
+                    "errors": {
+                        "failed": "환영 메시지를 설정하는 중 오류가 발생했습니다."
+                    }
+                },
+                "channel": {
+                    "description": "환영 메시지를 보낼 채널을 설정합니다.",
+                    "options": {
+                        "channel": "메시지를 보낼 채널"
+                    },
+                    "successTitle": "환영 채널 설정 완료",
+                    "successDescription": "환영 메시지를 보낼 채널이 `{channel}`로 설정되었습니다.",
+                    "errors": {
+                        "failed": "환영 채널을 설정하는 중 오류가 발생했습니다."
+                    }
+                }
+            }
+        },
+
+        "unmute": {
+            "description": "유저의 뮤트를 해제합니다.",
+            "options": {
+                "user": "뮤트를 해제할 유저"
+            },
+            "successTitle": "뮤트 해제 성공",
+            "successDescription": "{user}님의 뮤트가 해제되었습니다.",
+            "errors": {
+                "notMuted": "해당 유저는 뮤트 상태가 아닙니다.",
+                "failed": "뮤트를 해제하는 중 오류가 발생했습니다."
+            }
+        },
+
+        "warning": {
+            "add": {
+                "description": "유저에게 경고를 추가합니다.",
+                "options": {
+                    "user": "경고를 추가할 유저",
+                    "reason": "경고 사유"
+                },
+                "defaultReason": "사유 없음",
+                "successTitle": "경고 추가됨",
+                "successDescription": "{user}에게 경고가 추가되었습니다.\n사유: {reason}\n현재 경고 수: {count}",
+                "successBanned": "{user}가 경고 리밋 초과로 밴되었습니다.",
+                "errors": {
+                    "failed": "경고를 추가하는 중 오류가 발생했습니다."
+                }
+            },
+            "remove": {
+                "description": "유저의 경고를 제거합니다.",
+                "options": {
+                    "user": "경고를 제거할 유저",
+                    "index": "제거할 경고의 번호"
+                },
+                "success": "{user}의 경고가 제거되었습니다.\n남은 경고 수: {count}",
+                "errors": {
+                    "invalidIndex": "유효하지 않은 경고 번호입니다."
+                }
+            },
+            "list": {
+                "description": "유저의 경고 목록을 봅니다.",
+                "options": {
+                    "user": "경고 목록을 볼 유저"
+                },
+                "title": "{user}의 경고 목록",
+                "noWarnings": "해당 유저는 경고가 없습니다.",
+                "errors": {
+                    "failed": "경고 목록을 가져오는 중 오류가 발생했습니다."
+                }
+            }
+        },
+
+        "set4": {
+            "description": "서버 설정을 관리합니다.",
+            "currency": {
+                "description": "서버의 화폐 심볼을 설정합니다.",
+                "options": {
+                    "symbol": "설정할 화폐 심볼 (최대 3자)"
+                },
+                "successTitle": "화폐 심볼 설정 완료",
+                "successDescription": "화폐 심볼이 `{symbol}`(으)로 설정되었습니다.",
+                "errors": {
+                    "tooLong": "화폐 심볼은 최대 3자여야 합니다.",
+                    "failed": "화폐 심볼을 설정하는 중 오류가 발생했습니다."
+                }
+            }
+        },
+
+        "developer": {
+            "eval": {
+                "description": "JavaScript 코드를 실행합니다.",
+                "options": {
+                    "code": "실행할 코드"
+                },
+                "errors": {
+                    "noPermission": "이 명령어를 실행할 권한이 없습니다."
+                }
+            },
+            "stats": {
+                "description": "봇의 상태를 확인합니다.",
+                "title": "봇 상태",
+                "fields": {
+                    "uptime": "가동 시간",
+                    "servers": "서버 수",
+                    "users": "유저 수",
+                    "memory": "메모리 사용량"
+                },
+                "errors": {
+                    "noPermission": "이 명령어를 실행할 권한이 없습니다."
+                }
+            },
+            "reloadCommands": {
+                "description": "봇의 명령어를 새로고침합니다.",
+                "success": "명령어가 성공적으로 새로고침되었습니다.",
+                "errors": {
+                    "noPermission": "이 명령어를 실행할 권한이 없습니다.",
+                    "failed": "명령어를 새로고침하는 중 오류가 발생했습니다."
+                }
+            },
+            "analyzeUsers": {
+                "description": "서버의 유저 활동을 분석합니다.",
+                "title": "유저 활동 분석",
+                "fields": {
+                    "totalUsers": "전체 유저",
+                    "activeUsers": "활성 유저",
+                    "mutedUsers": "뮤트 유저"
+                }
+            },
+            "findServer": {
+                "description": "봇이 속한 서버를 검색합니다.",
+                "options": {
+                    "keyword": "검색할 키워드"
+                },
+                "title": "서버 검색 결과",
+                "errors": {
+                    "noMatch": "'{keyword}'와 일치하는 서버를 찾을 수 없습니다."
+                }
+            },
+            "cacheStatus": {
+                "description": "봇의 캐시 상태를 확인합니다.",
+                "title": "캐시 상태"
+            },
+            "clearCache": {
+                "description": "봇의 캐시를 초기화합니다.",
+                "success": "캐시가 성공적으로 초기화되었습니다."
+            },
+            "setMaintenance": {
+                "description": "봇을 유지보수 모드로 전환합니다.",
+                "options": {
+                    "status": "유지보수 모드 상태"
+                },
+                "enabled": "유지보수 모드가 활성화되었습니다.",
+                "disabled": "유지보수 모드가 비활성화되었습니다."
+            },
+            "errors": {
+                "noPermission": "이 명령어를 실행할 권한이 없습니다."
+            }
+        },
+
+        "parse": {
+            "description": "플레이스홀더가 포함된 메시지를 처리합니다.",
+            "options": {
+                "message": "처리할 메시지 (플레이스홀더 지원)"
+            }
+        },
+
+        "buyPremium": {
+            "description": "프리미엄을 구매합니다."
+        },
+
+        "premiumStatus": {
+            "description": "현재 프리미엄 상태를 확인합니다."
+        }
+    },
+
+    "errors": {
+        "serverNotFound": "서버 정보를 찾을 수 없습니다."
+    },
+
+    "placeholders": {
+        "ordinal": "{number}번째",
+        "noIcon": "서버 아이콘이 없습니다.",
+        "noMember": "멤버를 찾을 수 없습니다.",
+        "cachingLimit": "Discord 인텐트 제한으로 데이터를 가져올 수 없습니다.",
+        "randomMemberLimit": "활성화된 멤버를 가져올 수 없습니다."
+    },
+
+    "messages": {
+        "premium": {
+            "active": "✅ **프리미엄 활성화 중**\n남은 기간: **{days}일**\n\n감사합니다!",
+            "expired": "❌ 프리미엄이 만료되었습니다. 다시 구매해주세요.",
+            "inactive": "❌ 현재 프리미엄이 활성화되어 있지 않습니다."
+        }
+    },
+    "boost": {
+        "max_level": "최대 레벨에 도달했습니다"
+    },
+    "channel": {
+            "mention": "<#{id}>",
+            "name": "{name}",
+            "createdate": "{date}"
+    }
+}
